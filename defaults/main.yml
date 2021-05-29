@@ -8,6 +8,7 @@ openvpn_gateway_default_connection_name:
 openvpn_gateway_default_connection_protocol: udp
 
 openvpn_gateway_certificate:
+openvpn_gateway_tls_auth:
 
 openvpn_gateway_connections: []
 #openvpn_gateway_connections:

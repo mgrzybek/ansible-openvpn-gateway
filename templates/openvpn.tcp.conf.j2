@@ -23,3 +23,8 @@ auth-user-pass {{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.login.auth
 <ca>
 {{ openvpn_gateway_certificate | regex_replace('\n$','') }}
 </ca>
+{% if openvpn_gateway_tls_auth != None %}
+<tls-auth>
+{{ openvpn_gateway_tls_auth | regex_replace('\n$','') }}
+</tls-auth>
+{% endif %}

@@ -26,7 +26,7 @@
   template:
     src: login.auth.j2
     dest: "{{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.login.auth"
-    mode: 600
+    mode: 0600
     owner: root
     group: wheel
   notify:

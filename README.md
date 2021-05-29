@@ -23,6 +23,11 @@ openvpn_gateway_certificate: |
   data
   -----END CERTIFICATE-----
 
+openvpn_gateway_tls_auth: |
+  -----BEGIN OpenVPN Static key V1-----
+  data
+  -----END OpenVPN Static key V1-----
+
 openvpn_gateway_connections:
 - name: connection / conf file name
   auth:
