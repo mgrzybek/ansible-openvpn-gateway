@@ -25,6 +25,9 @@ openvpn_gateway_certificate: |
 
 openvpn_gateway_connections:
 - name: connection / conf file name
+  auth:
+    login: myself
+    password: secret
   servers:
   - server: hostname
     port: port number
@@ -46,6 +49,9 @@ Example Playbook
   vars:
     openvpn_gateway_connections:
     - name: my-private-service
+      auth:
+        login: myself
+        password: secret
       servers:
       - server: vpn1.example.org
         port: 443

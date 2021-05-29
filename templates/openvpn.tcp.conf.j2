@@ -19,7 +19,7 @@ remote {{ remote.server }} {{ remote.port }}
 
 route-delay
 reneg-sec 0
-auth-user-pass /usr/local/etc/openvpn/login.auth
+auth-user-pass {{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.login.auth
 <ca>
 {{ openvpn_gateway_certificate | regex_replace('\n$','') }}
 </ca>

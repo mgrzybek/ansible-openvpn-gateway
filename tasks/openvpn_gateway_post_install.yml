@@ -1,7 +1,7 @@
 ---
 
 - name: Post-Install | Create openvpn configuration directory
-  file: path=/usr/local/etc/openvpn state=directory
+  file: path={{ openvpn_gateway_openvpn_dir }} state=directory
 
 - name: Post-Install | Configure openvpn service
   template: src={{ item.source }} dest={{ item.destination }}
@@ -21,28 +21,43 @@
   notify:
   - restart pf service
 
+- name: Post-Install | Configure openvpn credentials
+  with_items: "{{ openvpn_gateway_connections }}"
+  template:
+    src: login.auth.j2
+    dest: "{{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.login.auth"
+    mode: 600
+    owner: root
+    group: wheel
+  notify:
+  - restart openvpn service
+
 - name: Post-Install | Configure openvpn tcp connections
+  with_items: "{{ openvpn_gateway_connections }}"
   template:
     src: openvpn.tcp.conf.j2
-    dest: /usr/local/etc/openvpn/{{ item.name }}.udp.conf
+    dest: "{{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.tcp.conf"
     owner: root
     group: wheel
-  with_items: "{{ openvpn_gateway_connections }}"
+  notify:
+  - restart openvpn service
   
 - name: Post-Install | Configure openvpn udp connections
+  with_items: "{{ openvpn_gateway_connections }}"
   template:
     src: openvpn.udp.conf.j2
-    dest: /usr/local/etc/openvpn/{{ item.name }}.udp.conf
+    dest: "{{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.udp.conf"
     owner: root
     group: wheel
-  with_items: "{{ openvpn_gateway_connections }}"
+  notify:
+  - restart openvpn service
 
 - name: Post-Install | Consul service definition
+  with_items: "{{ openvpn_gateway_consul }}"
   when:
     - configure_consul | lower == 'true'
   notify: reload consul
   template:
     src: service.consul.json.j2
     dest: "{{ openvpn_gateway_consul_services_path }}/{{ item.service.name }}.json"
-  with_items: "{{ openvpn_gateway_consul }}"
 

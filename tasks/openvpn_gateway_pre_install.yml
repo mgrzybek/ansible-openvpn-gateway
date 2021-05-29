@@ -11,14 +11,23 @@
     fail_msg: No server defined for {{ item }}
     that: item.servers | length > 0
 
+- name: Pre-Install | Check that each connection has credentials
+  with_items: "{{ openvpn_gateway_connections }}"
+  assert:
+    fail_msg: No server defined for {{ item }}
+    that:
+    - item.auth.login | length > 0
+    - item.auth.password | length > 0
+
 - name: Pre-Install | Check that we can guess the default connection name
+  when:
+  - openvpn_gateway_connections | length > 1
   assert:
     fail_msg: |
       The default connection name cannot be guessed.
       Please set `openvpn_gateway_default_connection_name`.
     that:
-    - openvpn_gateway_default_connection_name is undefined
-    - openvpn_gateway_connections | length > 1
+    - openvpn_gateway_default_connection_name != None
 
 - name: Pre-Install | Set default facts
   set_fact:

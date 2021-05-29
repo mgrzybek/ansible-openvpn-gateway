@@ -1,8 +1,10 @@
 ---
 
+openvpn_gateway_post_config_restart_on_change: true
 openvpn_gateway_package_state: present
 cache_timeout: 600
 
+openvpn_gateway_default_connection_name:
 openvpn_gateway_default_connection_protocol: udp
 
 openvpn_gateway_certificate:
