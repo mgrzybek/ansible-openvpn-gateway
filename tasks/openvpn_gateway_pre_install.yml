@@ -2,12 +2,35 @@
 
 - name: Pre-Install | Check operating system compatibility
   assert:
-    that: ansible_os_family == "FreeBSD"
     fail_msg: "This role must be applied to FreeBSD systems"
+    that: ansible_os_family == "FreeBSD"
+
+- name: Pre-Install | Check that each connection has at least one server
+  with_items: "{{ openvpn_gateway_connections }}"
+  assert:
+    fail_msg: No server defined for {{ item }}
+    that: item.servers | length > 0
+
+- name: Pre-Install | Check that we can guess the default connection name
+  assert:
+    fail_msg: |
+      The default connection name cannot be guessed.
+      Please set `openvpn_gateway_default_connection_name`.
+    that:
+    - openvpn_gateway_default_connection_name is undefined
+    - openvpn_gateway_connections | length > 1
 
 - name: Pre-Install | Set default facts
   set_fact:
     configure_consul: false
+
+- name: Pre-Install | Define the default connection to use
+  when:
+    - openvpn_gateway_connections | length == 1
+  block:
+    - name: Pre-Install | Set the default connection name
+      set_fact:
+        openvpn_gateway_default_connection_name: "{{ openvpn_gateway_connections[0].name }}"
 
 - name: Pre-Install | Check certificate
   assert:

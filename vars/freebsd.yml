@@ -2,3 +2,4 @@ openvpn_gateway_distro_packages:
 - openvpn
 
 openvpn_gateway_consul_services_path: /usr/local/etc/consul.d
+openvpn_gateway_openvpn_dir: /usr/local/etc/openvpn
