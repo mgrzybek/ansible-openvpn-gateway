@@ -95,7 +95,6 @@ lint                Test YAML syntax
 vagrant-destroy     Destroy vagrant boxes
 vagrant-variables   Test vagrant env variables
 vagrant-vbox        Test the playbook using vagrant and virtualbox
-$ export VAGRANT_BOX_NAME="my-box"
 # Optionnal variables
 $ export VAGRANT_BOX_NAME="my-box"
 $ export VAGRANT_BOX_URL="http://repo/my-box.box"
