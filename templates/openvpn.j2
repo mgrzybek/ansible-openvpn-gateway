@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+# enable tap device
+if_tap_load="YES"
+
+# set to YES to enable openvpn
+openvpn_enable="YES"
+# driver(s) to load, set to "tun", "tap" or "tun tap"
+openvpn_if="tap"
+# additional command line arguments
+openvpn_flags="--script-security 2 --up /usr/local/sbin/fw_start.sh --down /usr/local/sbin/fw_stop.sh"
+# --config file
+openvpn_configfile="/usr/local/etc/openvpn/privatvpn.udp.conf"
+# --cd directory
+openvpn_dir="/usr/local/etc/openvpn"

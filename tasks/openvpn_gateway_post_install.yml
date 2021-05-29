@@ -1,0 +1,48 @@
+---
+
+- name: Post-Install | Create openvpn configuration directory
+  file: path=/usr/local/etc/openvpn state=directory
+
+- name: Post-Install | Configure openvpn service
+  template: src={{ item.source }} dest={{ item.destination }}
+  with_items:
+  - source: openvpn.j2
+    destination: /etc/rc.conf.d/openvpn
+  notify:
+  - restart openvpn service
+
+- name: Post-Install | Configure packet filter
+  template: src={{ item.source }} dest={{ item.destination }}
+  with_items:
+  - source: pf.j2
+    destination: /etc/rc.conf.d/pf
+  - source: pf.rules.j2
+    destination: /etc/pf.rules
+  notify:
+  - restart pf service
+
+- name: Post-Install | Configure openvpn tcp connections
+  template:
+    src: openvpn.tcp.conf.j2
+    dest: /usr/local/etc/openvpn/{{ item.name }}.udp.conf
+    owner: root
+    group: wheel
+  with_items: "{{ openvpn_gateway_connections }}"
+  
+- name: Post-Install | Configure openvpn udp connections
+  template:
+    src: openvpn.udp.conf.j2
+    dest: /usr/local/etc/openvpn/{{ item.name }}.udp.conf
+    owner: root
+    group: wheel
+  with_items: "{{ openvpn_gateway_connections }}"
+
+- name: Post-Install | Consul service definition
+  when:
+    - configure_consul | lower == 'true'
+  notify: reload consul
+  template:
+    src: service.consul.json.j2
+    dest: "{{ openvpn_gateway_consul_services_path }}/{{ item.service.name }}.json"
+  with_items: "{{ openvpn_gateway_consul }}"
+

@@ -1,0 +1,19 @@
+# {{ ansible_managed }}
+# Déclaration des interfaces
+int_if = "ue0"
+vpn_if = "tap0"
+
+# Nettoyage
+set skip on lo0
+set block-policy drop
+scrub in all
+
+# Règle NAT
+nat on $vpn_if inet from $int_if:network:0 to any -> ($vpn_if)
+
+# On refuse tout
+block in log on $vpn_if all
+
+# Autorisation des flux LAN -> VPN
+pass on $vpn_if from ($int_if:network) to any keep state
+

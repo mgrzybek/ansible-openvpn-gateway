@@ -1,0 +1,17 @@
+---
+
+- name: Pre-Install | Check operating system compatibility
+  assert:
+    that: ansible_os_family == "FreeBSD"
+    fail_msg: "This role must be applied to FreeBSD systems"
+
+- name: Pre-Install | Set default facts
+  set_fact:
+    configure_consul: false
+
+- name: Pre-Install | Check certificate
+  assert:
+    fail_msg: The given certificate is not accurate
+    that:
+    - openvpn_gateway_certificate is defined
+    - openvpn_gateway_certificate | regex_replace('\n$','') | length == 1683

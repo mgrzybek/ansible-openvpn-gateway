@@ -1,0 +1,30 @@
+---
+
+openvpn_gateway_package_state: present
+cache_timeout: 600
+
+openvpn_gateway_certificate:
+
+openvpn_gateway_connections: []
+#openvpn_gateway_connections:
+#- name:
+#  servers:
+#  - server:
+#    port:
+#    protocol:
+
+openvpn_gateway_config_consul: false
+openvpn_gateway_consul: []
+#openvpn_gateway_consul:
+#    - service:
+#        name: ""
+#        tags:
+#            - ""
+#            - "traefik.enable=false"
+#        port: 
+#        checks:
+#            - args:
+#                - "systemctl"
+#                - "status"
+#                - ""
+#              interval: "60s

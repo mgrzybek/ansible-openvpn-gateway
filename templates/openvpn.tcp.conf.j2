@@ -1,0 +1,25 @@
+# {{ ansible_managed }}
+client
+dev tap
+proto tcp
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+ns-cert-type server
+comp-lzo
+verb 3
+remote-random
+
+{% for remote in item.servers %}
+{% if remote.protocol == 'tcp' %}
+remote {{ remote.server }} {{ remote.port }}
+{% endif %}
+{% endfor %}
+
+route-delay
+reneg-sec 0
+auth-user-pass /usr/local/etc/openvpn/login.auth
+<ca>
+{{ openvpn_gateway_certificate | regex_replace('\n$','') }}
+</ca>
