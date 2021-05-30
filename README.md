@@ -15,6 +15,7 @@ Role Variables
 openvpn_gateway_internal_iface: the network device to use for trafic forwarding
 openvpn_gateway_connection:
   name: connection name (used by monitoring)
+  device: tap or tun
   auth:
     login: myself
     password: secret
@@ -48,6 +49,7 @@ Example Playbook
     openvpn_gateway_internal_iface: re0
     openvpn_gateway_connection:
       name: my-private-service
+      device: tun
       auth:
         login: myself
         password: secret

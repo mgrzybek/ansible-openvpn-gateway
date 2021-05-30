@@ -1,12 +1,16 @@
 # {{ ansible_managed }}
 
 # enable tap device
+{% if openvpn_gateway_connection.device == 'tap' %}
 if_tap_load="YES"
+{% else %}
+if_tun_load="YES"
+{% endif %}
 
 # set to YES to enable openvpn
 openvpn_enable="YES"
 # driver(s) to load, set to "tun", "tap" or "tun tap"
-openvpn_if="tap"
+openvpn_if="{{ openvpn_gateway_connection.device }}"
 # additional command line arguments
 openvpn_flags="--script-security 2 --up /usr/local/sbin/fw_start.sh --down /usr/local/sbin/fw_stop.sh"
 # --config file

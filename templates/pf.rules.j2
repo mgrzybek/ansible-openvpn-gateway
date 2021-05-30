@@ -1,7 +1,9 @@
 # {{ ansible_managed }}
 # Déclaration des interfaces
+# HACK: on force l'ajout d'un 0 pour vpn_if
+# TODO: utiliser fw_start.sh pour générer automatiquement la configuration
 int_if = "{{ openvpn_gateway_internal_iface }}"
-vpn_if = "tap0"
+vpn_if = "{{ openvpn_gateway_connection.device }}0"
 
 # Nettoyage
 set skip on lo0

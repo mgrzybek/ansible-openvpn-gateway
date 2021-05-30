@@ -13,6 +13,13 @@
     fail_msg: No server defined
     that: openvpn_gateway_connection.servers | length > 0
 
+- name: Pre-Install | Check that the device is tap on tun
+  assert:
+    fail_msg: The device type must be tun or tap.
+    that:
+    - openvpn_gateway_connection.device is defined
+    - openvpn_gateway_connection.device | regex_search('t(un)|(ap)') != None
+
 - name: Pre-Install | Check that credentials are defined
   assert:
     fail_msg: No server defined

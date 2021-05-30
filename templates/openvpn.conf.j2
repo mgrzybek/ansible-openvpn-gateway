@@ -1,6 +1,7 @@
 # {{ ansible_managed }}
 nobind
-dev tap
+
+dev {{ openvpn_gateway_connection.device }}
 
 # Options
 tun-ipv6

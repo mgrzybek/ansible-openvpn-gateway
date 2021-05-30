@@ -7,6 +7,7 @@ openvpn_gateway_internal_iface:
 openvpn_gateway_connection: {}
 #openvpn_gateway_connection:
 #  name:
+#  device:
 #  servers:
 #  - server:
 #    port:
