@@ -32,21 +32,11 @@
   notify:
   - restart openvpn service
 
-- name: Post-Install | Configure openvpn tcp connections
+- name: Post-Install | Configure openvpn connections
   with_items: "{{ openvpn_gateway_connections }}"
   template:
-    src: openvpn.tcp.conf.j2
-    dest: "{{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.tcp.conf"
-    owner: root
-    group: wheel
-  notify:
-  - restart openvpn service
-  
-- name: Post-Install | Configure openvpn udp connections
-  with_items: "{{ openvpn_gateway_connections }}"
-  template:
-    src: openvpn.udp.conf.j2
-    dest: "{{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.udp.conf"
+    src: openvpn.conf.j2
+    dest: "{{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.conf"
     owner: root
     group: wheel
   notify:

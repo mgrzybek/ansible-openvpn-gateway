@@ -1,29 +1,35 @@
 # {{ ansible_managed }}
-client
-dev tap
-proto tcp
-resolv-retry infinite
 nobind
+dev tap
+
+# Options
+tun-ipv6
+remote-cert-tls server
+client
+comp-lzo
 persist-key
 persist-tun
-ns-cert-type server
-comp-lzo
 verb 3
-remote-random
 
+# Remotes
+remote-random
 {% for remote in item.servers %}
-{% if remote.protocol == 'tcp' %}
-remote {{ remote.server }} {{ remote.port }}
-{% endif %}
+remote {{ remote.server }} {{ remote.port }} {{ remote.protocol }}
 {% endfor %}
 
-route-delay
-reneg-sec 0
+# Crypto
+cipher AES-128-CBC
+auth SHA256
+script-security 2
 auth-user-pass {{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.login.auth
+
 <ca>
 {{ openvpn_gateway_certificate | regex_replace('\n$','') }}
 </ca>
+
 {% if openvpn_gateway_tls_auth != None %}
+key-direction 1
+
 <tls-auth>
 {{ openvpn_gateway_tls_auth | regex_replace('\n$','') }}
 </tls-auth>

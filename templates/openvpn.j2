@@ -10,6 +10,6 @@ openvpn_if="tap"
 # additional command line arguments
 openvpn_flags="--script-security 2 --up /usr/local/sbin/fw_start.sh --down /usr/local/sbin/fw_stop.sh"
 # --config file
-openvpn_configfile="{{ openvpn_gateway_openvpn_dir }}/{{ openvpn_gateway_default_connection_name }}.{{ openvpn_gateway_default_connection_protocol }}.conf"
+openvpn_configfile="{{ openvpn_gateway_openvpn_dir }}/{{ openvpn_gateway_default_connection_name }}.conf"
 # --cd directory
 openvpn_dir="{{ openvpn_gateway_openvpn_dir }}"

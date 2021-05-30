@@ -12,7 +12,6 @@ Role Variables
 
 ```yaml
 # Defaults
-openvpn_gateway_default_connection_protocol: udp # tcp or udp
 
 # If more than one connection is defined, we need to know which one to use.
 openvpn_gateway_default_connection_name: 
