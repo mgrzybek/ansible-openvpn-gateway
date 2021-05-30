@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 # Déclaration des interfaces
-int_if = "ue0"
+int_if = "{{ openvpn_gateway_internal_iface }}"
 vpn_if = "tap0"
 
 # Nettoyage

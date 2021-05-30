@@ -2,6 +2,8 @@ openvpn_gateway_post_config_restart_on_change: true
 openvpn_gateway_package_state: present
 cache_timeout: 600
 
+openvpn_gateway_internal_iface:
+
 openvpn_gateway_connection: {}
 #openvpn_gateway_connection:
 #  name:

@@ -12,6 +12,7 @@ Role Variables
 --------------
 
 ``` yaml
+openvpn_gateway_internal_iface: the network device to use for trafic forwarding
 openvpn_gateway_connection:
   name: connection name (used by monitoring)
   auth:
@@ -44,6 +45,7 @@ Example Playbook
   roles:
   - role: ansible-openvpn-gateway
   vars:
+    openvpn_gateway_internal_iface: re0
     openvpn_gateway_connection:
       name: my-private-service
       auth:

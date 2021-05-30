@@ -3,6 +3,11 @@
     fail_msg: This role must be applied to FreeBSD systems
     that: ansible_os_family == "FreeBSD"
 
+- name: Pre-Install | Check that the given internal iface exists
+  assert:
+    fail_msg: The given internal iface {{ ansible_interfaces }} does not exist.
+    that: openvpn_gateway_internal_iface in ansible_interfaces
+
 - name: Pre-Install | Check that there is at least one server
   assert:
     fail_msg: No server defined
