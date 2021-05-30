@@ -1,6 +1,16 @@
 - hosts: all
   become: true
   become_method: sudo
+  gather_facts: false
+  tasks:
+  - name: Install python
+    register: python_result
+    raw: pkg install -y python
+    changed_when: python_result.stdout_lines[-1] != 'The most recent versions of packages are already installed'
+
+- hosts: all
+  become: true
+  become_method: sudo
 
   vars: {}
 
@@ -12,7 +22,7 @@
     setup:
 
   roles:
-  - role: openvpn_gateway
+  - role: ../ansible-openvpn-gateway
 
   post_tasks:
   - name: Post-Tasks | Run setup
