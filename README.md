@@ -5,12 +5,13 @@ Ansible role to deploy an OpenVPN gateway on BSD systems.
 Requirements
 ------------
 
-N.A.
+When used within a jail, [some configuration is
+needed](https://www.carlomaiorano.me/freebsd/2019/02/18/openvpn-freebsd-jail.html)
 
 Role Variables
 --------------
 
-```yaml
+``` yaml
 openvpn_gateway_connection:
   name: connection name (used by monitoring)
   auth:
@@ -38,7 +39,7 @@ N.A.
 Example Playbook
 ----------------
 
-```yaml
+``` yaml
 - hosts: servers
   roles:
   - role: ansible-openvpn-gateway
@@ -96,7 +97,7 @@ Testing
 
 This role provides a `Vagrantfile` and a `Makefile`.
 
-```bash
+``` bash
 # Makefile-provided commands
 $ make help
 help                This help message
