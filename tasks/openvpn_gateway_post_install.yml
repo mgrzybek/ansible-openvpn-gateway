@@ -1,5 +1,3 @@
----
-
 - name: Post-Install | Create openvpn configuration directory
   file: path={{ openvpn_gateway_openvpn_dir }} state=directory
 
@@ -24,7 +22,7 @@
 - name: Post-Install | Configure openvpn credentials
   template:
     src: login.auth.j2
-    dest: "{{ openvpn_gateway_openvpn_dir }}/login.auth"
+    dest: '{{ openvpn_gateway_openvpn_dir }}/login.auth'
     mode: 0600
     owner: root
     group: wheel
@@ -34,18 +32,18 @@
 - name: Post-Install | Configure openvpn connections
   template:
     src: openvpn.conf.j2
-    dest: "{{ openvpn_gateway_openvpn_dir }}/openvpn.conf"
+    dest: '{{ openvpn_gateway_openvpn_dir }}/openvpn.conf'
     owner: root
     group: wheel
   notify:
   - restart openvpn service
 
 - name: Post-Install | Consul service definition
-  with_items: "{{ openvpn_gateway_consul }}"
+  with_items: '{{ openvpn_gateway_consul }}'
   when:
-    - configure_consul | lower == 'true'
+  - configure_consul | lower == 'true'
   notify: reload consul
   template:
     src: service.consul.json.j2
-    dest: "{{ openvpn_gateway_consul_services_path }}/{{ item.service.name }}.json"
+    dest: '{{ openvpn_gateway_consul_services_path }}/{{ item.service.name }}.json'
 

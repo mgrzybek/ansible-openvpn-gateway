@@ -1,8 +1,6 @@
----
-
 - name: Pre-Install | Check operating system compatibility
   assert:
-    fail_msg: "This role must be applied to FreeBSD systems"
+    fail_msg: This role must be applied to FreeBSD systems
     that: ansible_os_family == "FreeBSD"
 
 - name: Pre-Install | Check that there is at least one server

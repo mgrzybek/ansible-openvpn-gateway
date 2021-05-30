@@ -1,14 +1,12 @@
----
-
 - name: restart pf service
   service: name=pf state=restarted enabled=yes
   when:
-    - openvpn_gateway_post_config_restart_on_change | lower == 'true'
+  - openvpn_gateway_post_config_restart_on_change | lower == 'true'
 
 - name: restart openvpn service
   service: name=openvpn state=restarted enabled=yes
   when:
-    - openvpn_gateway_post_config_restart_on_change | lower == 'true'
+  - openvpn_gateway_post_config_restart_on_change | lower == 'true'
 
 - name: reload consul
   command: consul reload
