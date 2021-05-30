@@ -5,45 +5,28 @@
     fail_msg: "This role must be applied to FreeBSD systems"
     that: ansible_os_family == "FreeBSD"
 
-- name: Pre-Install | Check that each connection has at least one server
-  with_items: "{{ openvpn_gateway_connections }}"
+- name: Pre-Install | Check that there is at least one server
   assert:
-    fail_msg: No server defined for {{ item }}
-    that: item.servers | length > 0
+    fail_msg: No server defined
+    that: openvpn_gateway_connection.servers | length > 0
 
-- name: Pre-Install | Check that each connection has credentials
-  with_items: "{{ openvpn_gateway_connections }}"
+- name: Pre-Install | Check that credentials are defined
   assert:
-    fail_msg: No server defined for {{ item }}
+    fail_msg: No server defined
     that:
-    - item.auth.login | length > 0
-    - item.auth.password | length > 0
-
-- name: Pre-Install | Check that we can guess the default connection name
-  when:
-  - openvpn_gateway_connections | length > 1
-  assert:
-    fail_msg: |
-      The default connection name cannot be guessed.
-      Please set `openvpn_gateway_default_connection_name`.
-    that:
-    - openvpn_gateway_default_connection_name != None
+    - openvpn_gateway_connection.auth is defined
+    - openvpn_gateway_connection.auth.login is defined
+    - openvpn_gateway_connection.auth.password is defined
+    - openvpn_gateway_connection.auth.login | length > 0
+    - openvpn_gateway_connection.auth.password | length > 0
 
 - name: Pre-Install | Set default facts
   set_fact:
     configure_consul: false
 
-- name: Pre-Install | Define the default connection to use
-  when:
-    - openvpn_gateway_connections | length == 1
-  block:
-    - name: Pre-Install | Set the default connection name
-      set_fact:
-        openvpn_gateway_default_connection_name: "{{ openvpn_gateway_connections[0].name }}"
-
 - name: Pre-Install | Check certificate
   assert:
     fail_msg: The given certificate is not accurate
     that:
-    - openvpn_gateway_certificate is defined
-    - openvpn_gateway_certificate | regex_replace('\n$','') | length == 1683
+    - openvpn_gateway_connection.certificate is defined
+    - openvpn_gateway_connection.certificate | regex_replace('\n$','') | length == 1683

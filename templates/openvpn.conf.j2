@@ -13,7 +13,7 @@ verb 3
 
 # Remotes
 remote-random
-{% for remote in item.servers %}
+{% for remote in openvpn_gateway_connection.servers %}
 remote {{ remote.server }} {{ remote.port }} {{ remote.protocol }}
 {% endfor %}
 
@@ -21,16 +21,16 @@ remote {{ remote.server }} {{ remote.port }} {{ remote.protocol }}
 cipher AES-128-CBC
 auth SHA256
 script-security 2
-auth-user-pass {{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.login.auth
+auth-user-pass {{ openvpn_gateway_openvpn_dir }}/login.auth
 
 <ca>
-{{ openvpn_gateway_certificate | regex_replace('\n$','') }}
+{{ openvpn_gateway_connection.certificate | regex_replace('\n$','') }}
 </ca>
 
-{% if openvpn_gateway_tls_auth != None %}
+{% if openvpn_gateway_connection.tls_auth != None %}
 key-direction 1
 
 <tls-auth>
-{{ openvpn_gateway_tls_auth | regex_replace('\n$','') }}
+{{ openvpn_gateway_connection.tls_auth | regex_replace('\n$','') }}
 </tls-auth>
 {% endif %}

@@ -4,18 +4,15 @@ openvpn_gateway_post_config_restart_on_change: true
 openvpn_gateway_package_state: present
 cache_timeout: 600
 
-openvpn_gateway_default_connection_name:
-
-openvpn_gateway_certificate:
-openvpn_gateway_tls_auth:
-
-openvpn_gateway_connections: []
-#openvpn_gateway_connections:
-#- name:
+openvpn_gateway_connection: {}
+#openvpn_gateway_connection:
+#  name:
 #  servers:
 #  - server:
 #    port:
 #    protocol:
+#  certificate:
+#  tls_auth:
 
 openvpn_gateway_config_consul: false
 openvpn_gateway_consul: []

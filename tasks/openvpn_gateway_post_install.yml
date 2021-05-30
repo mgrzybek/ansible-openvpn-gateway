@@ -22,10 +22,9 @@
   - restart pf service
 
 - name: Post-Install | Configure openvpn credentials
-  with_items: "{{ openvpn_gateway_connections }}"
   template:
     src: login.auth.j2
-    dest: "{{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.login.auth"
+    dest: "{{ openvpn_gateway_openvpn_dir }}/login.auth"
     mode: 0600
     owner: root
     group: wheel
@@ -33,10 +32,9 @@
   - restart openvpn service
 
 - name: Post-Install | Configure openvpn connections
-  with_items: "{{ openvpn_gateway_connections }}"
   template:
     src: openvpn.conf.j2
-    dest: "{{ openvpn_gateway_openvpn_dir }}/{{ item.name }}.conf"
+    dest: "{{ openvpn_gateway_openvpn_dir }}/openvpn.conf"
     owner: root
     group: wheel
   notify:
