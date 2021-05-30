@@ -4,7 +4,7 @@
   service: name=pf state=restarted enabled=yes
   when:
     - openvpn_gateway_post_config_restart_on_change | lower == 'true'
-  
+
 - name: restart openvpn service
   service: name=openvpn state=restarted enabled=yes
   when:
