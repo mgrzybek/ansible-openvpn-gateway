@@ -12,7 +12,8 @@
   become: true
   become_method: sudo
 
-  vars: {}
+  vars:
+    ansible_python_interpreter: /usr/local/bin/python
 
   pre_tasks:
   - name: Pre-tasks | Hello World
