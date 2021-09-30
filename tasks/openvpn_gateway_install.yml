@@ -1,4 +1,5 @@
 - name: Install | Install openvpn packages
+  when: install_openvpn | lower == 'true'
   package:
     name: '{{ openvpn_gateway_distro_packages }}'
     state: '{{ openvpn_gateway_package_state }}'
@@ -10,7 +11,6 @@
   delay: 2
   tags:
   - install-pkgng
-
 
 - name: Install | Install pf scripts
   template: src={{ item }}.sh.j2 dest=/usr/local/sbin/{{ item }}.sh mode=0755

@@ -30,9 +30,20 @@
     - openvpn_gateway_connection.auth.login | length > 0
     - openvpn_gateway_connection.auth.password | length > 0
 
+- name: Pre-Install | Check openvpn service
+  changed_when: false
+  register: ovpn_result
+  command: /usr/local/etc/rc.d/openvpn status
+
 - name: Pre-Install | Set default facts
   set_fact:
     configure_consul: false
+    install_openvpn: true
+
+- name: Pre-Install | Set openvpn fact
+  when: ovpn_result.stdout | regex_search('openvpn is running as pid')
+  set_fact:
+    install_openvpn: false
 
 - name: Pre-Install | Check certificate
   assert:
